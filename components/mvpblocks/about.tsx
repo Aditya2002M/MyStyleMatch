@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Sparkles, ArrowRight, Quote, Layers, Compass, Fingerprint } from 'lucide-react';
+import { Sparkles, ArrowRight, Quote, Layers, Compass, Fingerprint, LucideProps } from 'lucide-react';
 
 export default function About() {
   const { scrollYProgress } = useScroll();
@@ -110,7 +110,10 @@ export default function About() {
               >
                 <div className="bg-white p-10 rounded-[2.8rem] h-full transition-all duration-500 group-hover:bg-transparent">
                   <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-8 text-slate-900 group-hover:scale-110 group-hover:shadow-xl transition-all">
-                    {React.cloneElement(item.icon as React.ReactElement, { size: 24 })}
+                    {React.cloneElement(
+  item.icon as React.ReactElement<LucideProps>,
+  { size: 24 }
+)}
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
                   <p className="text-slate-500 leading-relaxed text-sm">
