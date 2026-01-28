@@ -52,12 +52,12 @@ export default function WaitlistPage() {
   };
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center overflow-hidden xl:h-screen">
+    <main className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden xl:h-screen">
       <Ripple></Ripple>
 
      
 
-      <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-[1.35] sm:scale-[1.25]">
+      <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-100 md:scale-[1.1] lg:scale-[1.2]">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -117,7 +117,7 @@ export default function WaitlistPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="mb-6 grid grid-cols-2 gap-6 sm:grid-cols-3"
+          className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           <div
             className={cn(
@@ -249,7 +249,7 @@ export default function WaitlistPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 1 }}
-          className="mt-10 flex items-center justify-center gap-1"
+          className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-1"
         >
           <div className="flex -space-x-3">
             {users.map((user, i) => (
