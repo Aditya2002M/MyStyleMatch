@@ -2,7 +2,7 @@
 
 import type React from 'react';
 import { useState, useEffect } from 'react';
-import { ArrowRight, Sparkles, Code, Star, ExternalLink } from 'lucide-react';
+import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Particles } from '@/components/ui/particles';
 import { Spotlight } from '@/components/ui/spotlight';
@@ -100,8 +100,12 @@ export default function WaitlistPage() {
           transition={{ duration: 1, delay: 0.5 }}
           className="text-muted-foreground mt-2 mb-12 sm:text-lg"
         >
-         
+
+          <div className='flex justify-center items-center'>
           <DrawCircleText></DrawCircleText>
+          </div>
+         
+          
           AI-powered discovery meets a curated marketplace of trusted Indian retailers
           and designers.
           <br className="hidden sm:block" />
@@ -117,35 +121,35 @@ export default function WaitlistPage() {
         >
           <div
             className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md',
+              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
               resolvedTheme === 'dark' ? 'glass' : 'glass2',
             )}
           >
-            <Code className="text-primary mb-2 h-5 w-5" />
-            <span className="text-xl font-bold">100+</span>
-            <span className="text-muted-foreground text-xs">Components</span>
+            <span className="mb-1 text-lg">🧠</span>
+            <span className="text-xl font-bold">AI-Powered Styling</span>
+            <span className="text-muted-foreground text-xs">EFGPT-driven personalized recommendations</span>
           </div>
 
           <div
             className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md',
+              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
               resolvedTheme === 'dark' ? 'glass' : 'glass2',
             )}
           >
-            <ExternalLink className="text-primary mb-2 h-5 w-5" />
-            <span className="text-xl font-bold">Open Source</span>
-            <span className="text-muted-foreground text-xs">BSD 3-Clause</span>
+            <span className="mb-1 text-lg">🇮🇳</span>
+            <span className="text-xl font-bold">Verified Indian Designers</span>
+            <span className="text-muted-foreground text-xs">Trusted sellers. Authentic fashion.</span>
           </div>
 
           <div
             className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md',
+              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
               resolvedTheme === 'dark' ? 'glass' : 'glass2',
             )}
           >
-            <Star className="text-primary mb-2 h-5 w-5" />
-            <span className="text-xl font-bold">Premium</span>
-            <span className="text-muted-foreground text-xs">Quality</span>
+            <span className="mb-1 text-lg">🌍</span>
+            <span className="text-xl font-bold">Global Fit & Delivery</span>
+            <span className="text-muted-foreground text-xs">Shop Indian ethnic wear worldwide with confidence</span>
           </div>
         </motion.div>
 

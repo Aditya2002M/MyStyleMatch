@@ -4,7 +4,7 @@ import { AuroraText } from "@/components/ui/aurora-text"
 export const DrawCircleText = () => {
   return (
     
-      <h1 className="max-w-2xl text-center text-3xl sm:text-4xl leading-snug">
+      <h1 className="max-w-2xl text-center align-middle text-3xl sm:text-4xl leading-snug">
         Discover{" "}
         <span className="relative inline-block">
          <AuroraText>Indian Ethnic Fashion</AuroraText>
