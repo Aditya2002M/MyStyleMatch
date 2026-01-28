@@ -98,7 +98,7 @@ export default function About() {
                 title: "Seamless Layers", 
                 desc: "From the loom to your doorstep—we manage the complexity of global logistics.",
                 icon: <Layers />, 
-                color: "from-slate-50 to-slate-100/50" 
+                color: "from-purple-50 to-purple-100/50" 
               }
             ].map((item, i) => (
               <motion.div

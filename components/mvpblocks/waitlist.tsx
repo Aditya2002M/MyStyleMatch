@@ -53,7 +53,7 @@ export default function WaitlistPage() {
 
      
 
-      <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-100 md:scale-[1.1] lg:scale-[1.2]">
+      <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-100 md:scale-[1.1] lg:scale-[1.2] mt-5">
         
         {/* Badge */}
         <motion.div
