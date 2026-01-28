@@ -91,7 +91,7 @@ export default function WaitlistPage() {
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
@@ -108,7 +108,7 @@ export default function WaitlistPage() {
           <br className="hidden sm:block" />
           StyleMatch connects global buyers to authentic Indian ethnic fashion.
 
-        </motion.p>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
