@@ -4,15 +4,11 @@ import type React from 'react';
 import { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Particles } from '@/components/ui/particles';
-import { Spotlight } from '@/components/ui/spotlight';
 import { useTheme } from 'next-themes';
 import { Bricolage_Grotesque } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Ripple } from '../ui/ripple';
 import { SparklesText } from '../ui/sparkles-text';
-import { Highlighter } from '../ui/highlighter';
-import { AuroraText } from "@/components/ui/aurora-text"
 import { DrawCircleText } from '../ui/DrawCircleText';
 const brico = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -52,12 +48,13 @@ export default function WaitlistPage() {
   };
 
   return (
-    <main className="relative flex min-h-screen w-full items-center justify-center overflow-x-hidden xl:h-screen">
+    <section className="relative flex flex-col min-h-screen w-full">
       <Ripple></Ripple>
 
      
 
       <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-100 md:scale-[1.1] lg:scale-[1.2]">
+        
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -70,7 +67,7 @@ export default function WaitlistPage() {
             alt="logo"
             className="spin h-6 w-6"
           />
-          <span className="text-sm font-medium">Comming soon</span>
+          <span className="text-sm font-medium">Coming soon</span>
           <motion.div
             animate={{ x: [0, 5, 0] }}
             transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
@@ -305,6 +302,7 @@ export default function WaitlistPage() {
           }
         }
       `}</style>
-    </main>
+      
+    </section>
   );
 }
