@@ -154,6 +154,9 @@ export default function About() {
 
               <motion.button 
                 whileHover={{ gap: '2rem' }}
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
                 className="flex items-center gap-4 bg-slate-900 text-white px-10 py-5 rounded-full font-bold group transition-all"
               >
                 Start Your Journey <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
