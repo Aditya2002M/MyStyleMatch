@@ -128,23 +128,17 @@ export const SparklesText: React.FC<SparklesTextProps> = ({
     return () => clearInterval(interval)
   }, [colors.first, colors.second, sparklesCount])
 
-  return (
-    <div
-      className={cn("text-6xl font-bold", className)}
-      {...props}
-      style={
-        {
-          "--sparkles-first-color": `${colors.first}`,
-          "--sparkles-second-color": `${colors.second}`,
-        } as CSSProperties
-      }
-    >
-      <span className="relative inline-block">
-        {sparkles.map((sparkle) => (
-          <Sparkle key={sparkle.id} {...sparkle} />
-        ))}
-        <strong>{children}</strong>
-      </span>
-    </div>
-  )
+return (
+  <div
+    className={cn("relative inline-block", className)}
+    {...props}
+  >
+    <span className="relative inline-block">
+      {sparkles.map((sparkle) => (
+        <Sparkle key={sparkle.id} {...sparkle} />
+      ))}
+      <span className="relative z-10">{children}</span>
+    </span>
+  </div>
+)
 }

@@ -1,177 +1,148 @@
 'use client';
-
-import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Sparkles, ArrowRight, Quote, Layers, Compass, Fingerprint, LucideProps } from 'lucide-react';
+import {  Diamond, ShieldCheck, Zap, Globe, Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Bricolage_Grotesque } from 'next/font/google';
+
+const brico = Bricolage_Grotesque({ subsets: ['latin'] });
 
 export default function About() {
   const { scrollYProgress } = useScroll();
   
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
+  const scale = useTransform(scrollYProgress, [0.4, 0.7], [0.8, 1]);
+  const rotate = useTransform(scrollYProgress, [0.4, 0.7], [-5, 0]);
 
   return (
-    <section className="relative w-full bg-white py-32 overflow-hidden">
-      <div className="absolute top-20 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] select-none">
-        <motion.h2 
-          style={{ x: y2 }}
-          className="text-[20vw] font-bold whitespace-nowrap text-slate-900 leading-none"
-        >
-          Style Match
-        </motion.h2>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        
-        <div className="relative mb-40 flex flex-col md:flex-row items-center gap-16">
+    <section className="relative w-full bg-[#FAFAFA] dark:bg-[#0E0E0E] py-32 overflow-hidden transition-colors duration-700">
+      
+      <div className="max-w-7xl mx-auto px-6 mb-40">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="relative w-full md:w-1/2 aspect-[4/5] bg-rose-50 rounded-[4rem] overflow-hidden"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="md:w-1/2"
           >
-
-            <div className="absolute inset-0 bg-gradient-to-tr from-rose-100 to-blue-100" />
-            <div className="absolute inset-0 flex items-center justify-center">
-               <Sparkles className="w-32 h-32 text-rose-200 animate-pulse" />
-            </div>
-
-            <motion.div 
-              style={{ y: y1 }}
-              className="absolute bottom-10 -right-8 p-8 bg-white/80 backdrop-blur-xl border border-rose-100 rounded-3xl shadow-xl max-w-xs"
-            >
-              <h4 className="font-bold text-slate-900 mb-2">Curated by Intelligence</h4>
-              <p className="text-sm text-slate-500 italic">" We don't just find clothes; we find your cultural counterpart."</p>
-            </motion.div>
+            <h2 className={cn("text-8xl md:text-[11rem] font-bold leading-[0.75] tracking-tighter dark:text-white text-[#0F172A]", brico.className)}>
+              Global <br /> 
+              <span className="text-[#C89A3A]">Heritage</span> <br /> 
+              Link.
+            </h2>
           </motion.div>
-
-          <div className="w-full md:w-1/2 space-y-8">
-            <motion.div 
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              className="inline-block px-4 py-1.5 rounded-full border border-rose-200 bg-gradient-to-b from-rose-50 to-blue-50 text-rose-500 text-xs font-bold uppercase tracking-widest"
-            >
-              The StyleMatch Vision
-            </motion.div>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              className="text-6xl font-bold text-slate-900 leading-[1.1]"
-            >
-              The Soul of India, <br/>
-              <span className="text-rose-400 font-serif italic">Matched</span> to You.
-            </motion.h2>
-            <p className="text-xl text-slate-500 leading-relaxed">
-              StyleMatch is a reimagining of the ethnic marketplace. We’ve replaced the chaos of endless searching with a sophisticated AI stylist that understands the nuance of every weave and the importance of every occasion.
-            </p>
-          </div>
-        </div>
-
-        <div className="relative mb-40">
-
-          <svg className="absolute top-0 left-0 w-full h-full hidden lg:block pointer-events-none opacity-20" viewBox="0 0 1200 400">
-            <path d="M50,100 C200,100 300,300 600,300 S1000,100 1150,100" fill="none" stroke="url(#gradient)" strokeWidth="2" strokeDasharray="8 8" />
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#fb7185" />
-                <stop offset="100%" stopColor="#60a5fa" />
-              </linearGradient>
-            </defs>
-          </svg>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
-            {[
-              { 
-                title: "Digital Fingerprint", 
-                desc: "Every artisan's work is uniquely logged to ensure absolute authenticity and fair trade.",
-                icon: <Fingerprint />, 
-                color: "from-rose-50 to-rose-100/50" 
-              },
-              { 
-                title: "Curated Compass", 
-                desc: "Our AI doesn't just search; it guides you through India's diverse regional textiles.",
-                icon: <Compass />, 
-                color: "from-blue-50 to-blue-100/50",
-                translate: "lg:translate-y-24"
-              },
-              { 
-                title: "Seamless Layers", 
-                desc: "From the loom to your doorstep—we manage the complexity of global logistics.",
-                icon: <Layers />, 
-                color: "from-purple-50 to-purple-100/50" 
-              }
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
-                className={`group p-1 bg-gradient-to-br rounded-[3rem] ${item.color} ${item.translate || ""}`}
-              >
-                <div className="bg-white p-10 rounded-[2.8rem] h-full transition-all duration-500 group-hover:bg-transparent">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-8 text-slate-900 group-hover:scale-110 group-hover:shadow-xl transition-all">
-                    {React.cloneElement(
-  item.icon as React.ReactElement<LucideProps>,
-  { size: 24 }
-)}
-                  </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
-                  <p className="text-slate-500 leading-relaxed text-sm">
-                    {item.desc}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative">
+          
           <motion.div 
-            style={{ rotate }}
-            className="absolute -top-20 -left-10 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-60"
-          />
-          <div className="grid md:grid-cols-12 gap-12 items-start">
-            <div className="md:col-span-5 border-l-4 border-blue-400 pl-8 py-4">
-               <Quote className="w-12 h-12 text-rose-100 mb-4" />
-               <h3 className="text-4xl font-bold text-slate-900 mb-6">"We wanted to bridge the gap between global demand and local artistry."</h3>
-               <p className="text-slate-400 font-medium">— Our Founding Philosophy</p>
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="md:w-1/3 pt-10"
+          >
+            <p className="text-xl dark:text-[#B3B3B3] text-[#475569] leading-relaxed font-light italic border-l-2 border-[#C89A3A] pl-8">
+              "To establish StyleMatch as the leading global brand, leveraging technology to blend tradition with innovation and foster cultural inclusivity."
+            </p>
+            <div className="mt-8 flex flex-col gap-4">
+               <div className="flex gap-2">
+                  <div className="px-3 py-1 rounded-full border border-[#C89A3A]/20 text-[10px] uppercase font-bold text-[#C89A3A]">US Based</div>
+                  <div className="px-3 py-1 rounded-full border border-[#C89A3A]/20 text-[10px] uppercase font-bold text-[#C89A3A]">AI Powered</div>
+               </div>
+               <p className="text-[10px] uppercase tracking-widest text-[#C89A3A] font-bold">Ambassador of Indian Couture</p>
             </div>
-            
-            <div className="md:col-span-7 space-y-12">
-              <div className="space-y-6">
-                <h4 className="text-2xl font-bold text-slate-800">The Problem</h4>
-                <p className="text-slate-500 text-lg leading-relaxed">
-                  Indian ethnic wear is a language. But for the global buyer, the dialects are confusing. Sizes vary, quality is inconsistent, and the most beautiful pieces often stay hidden in local boutiques.
-                </p>
-              </div>
-              
-              <div className="space-y-6">
-                <h4 className="text-2xl font-bold text-slate-800">Our Solution</h4>
-                <p className="text-slate-500 text-lg leading-relaxed">
-                  We built <span className="text-rose-500 font-semibold underline decoration-rose-200 underline-offset-4">StyleMatch</span>. It’s an intelligent ecosystem. We verify every designer and use our EFGPT styling engine to act as your personal concierge—ensuring your style is never compromised by geography.
-                </p>
-              </div>
-
-              <motion.button 
-                whileHover={{ gap: '2rem' }}
-                onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-                className="flex items-center gap-4 bg-slate-900 text-white px-10 py-5 rounded-full font-bold group transition-all"
-              >
-                Start Your Journey <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
-              </motion.button>
-            </div>
-          </div>
+          </motion.div>
         </div>
-
       </div>
 
-      <motion.div 
-        animate={{ y: [0, 40, 0], x: [0, 20, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-        className="absolute bottom-[10%] right-[5%] w-64 h-64 bg-rose-50 rounded-full blur-[80px] opacity-50"
-      />
+      <div className="relative max-w-7xl mx-auto px-6 h-[120vh] md:h-[150vh] hidden md:block">
+        {[
+          { 
+            title: "EFGPT Engine", 
+            desc: "Our Ethnic Fashion Generative Pre-Trained Transformer provides personalized recommendations based on style, fit, and budget.",
+            color: "bg-[#141414]", 
+            top: "0%", 
+            left: "10%",
+            icon: <Zap />
+          },
+          { 
+            title: "Curated Curation", 
+            desc: "We connect international buyers with a trusted list of retailers and designers, ensuring absolute quality and cultural authenticity.",
+            color: "bg-[#1A1A1A]", 
+            top: "20%", 
+            left: "40%",
+            icon: <ShieldCheck />
+          },
+          { 
+            title: "Data-Centric Insights", 
+            desc: "Leveraging innovative technology to redefine how global customers discover and connect with India's rich fashion legacy.",
+            color: "bg-[#222222]", 
+            top: "40%", 
+            left: "70%",
+            icon: <Globe />
+          }
+        ].map((card, i) => (
+          <motion.div
+            key={i}
+            style={{ scale, rotate, }}
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.2 }}
+            className={cn(
+              "absolute w-[450px] p-12 rounded-[3rem] border border-[#C89A3A]/20 shadow-2xl group cursor-none",
+              card.color
+            )} 
+            style={{ top: card.top, left: card.left }}
+          >
+            <div className="text-[#C89A3A] mb-8 group-hover:scale-125 transition-transform duration-500">
+              {card.icon}
+            </div>
+            <h4 className="text-3xl font-bold text-white mb-6 uppercase tracking-tight">{card.title}</h4>
+            <p className="text-[#B3B3B3] leading-relaxed font-light">{card.desc}</p>
+            <div className="mt-10 flex items-center gap-2 text-[#C89A3A] text-xs font-bold uppercase tracking-widest">
+              Explore Vision <Plus className="w-3 h-3" />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="md:hidden px-6 space-y-6 mb-40">
+         <div className="p-8 bg-[#141414] rounded-3xl border border-[#C89A3A]/20">
+            <h4 className="text-white font-bold text-xl mb-4 uppercase">EFGPT Tech</h4>
+            <p className="text-[#B3B3B3] text-sm">Personalized Indian ethnic styling recommendations powered by Generative AI.</p>
+         </div>
+         <div className="p-8 bg-[#141414] rounded-3xl border border-[#C89A3A]/20">
+            <h4 className="text-white font-bold text-xl mb-4 uppercase">Cultural Bridge</h4>
+            <p className="text-[#B3B3B3] text-sm">Connecting the international buyer to India's most prestigious designers.</p>
+         </div>
+      </div>
+
+      <div className="relative w-full mt-4">
+        <div className="bg-[#C89A3A] py-24 md:py-40">
+           <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
+             <motion.div
+               whileInView={{ opacity: [0, 1], scale: [0.9, 1] }}
+               className="mb-10 text-[#0E0E0E]"
+             >
+               <Diamond className="w-16 h-16" />
+             </motion.div>
+
+             <h3 className={cn("text-6xl md:text-[10rem] font-bold text-[#0E0E0E] tracking-tighter leading-[0.8] mb-16", brico.className)}>
+               Seamlessly <br /> <span className="opacity-40">Trusted.</span>
+             </h3>
+
+             <div className="flex flex-col md:flex-row gap-8 items-center">
+                <motion.button 
+                  whileHover={{ scale: 1.1, backgroundColor: "#0E0E0E", color: "#C89A3A" }}
+                  className="px-16 py-8 bg-transparent border-2 border-[#0E0E0E] text-[#0E0E0E] rounded-full font-black text-sm uppercase tracking-[0.3em] transition-all"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                  Join Waitlist
+                </motion.button>
+                
+             </div>
+           </div>
+        </div>
+      </div>
+
+      {/* Background Decorative Stamp */}
+      <div className="absolute bottom-10 left-10 opacity-10 pointer-events-none hidden xl:block">
+        <span className="text-[8rem] font-black text-[#C89A3A]">STYLEMATCH</span>
+      </div>
+
     </section>
   );
 }
