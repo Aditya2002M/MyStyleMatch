@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import {  Diamond, ShieldCheck, Zap, Globe, Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Bricolage_Grotesque } from 'next/font/google';
+import ProductPhotoshoot from './ProductPhotoshoot';
 
 const brico = Bricolage_Grotesque({ subsets: ['latin'] });
 
@@ -110,6 +111,8 @@ export default function About() {
          </div>
       </div>
 
+      <ProductPhotoshoot></ProductPhotoshoot>
+      
       <div className="relative w-full mt-4">
         <div className="bg-[#C89A3A] py-24 md:py-40">
            <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center">
