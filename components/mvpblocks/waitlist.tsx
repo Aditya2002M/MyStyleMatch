@@ -1,308 +1,238 @@
 'use client';
 
 import type React from 'react';
-import { useState, useEffect } from 'react';
-import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect} from 'react';
+import { ArrowRight, Sparkles, ExternalLink, ShieldCheck, Diamond, Globe } from 'lucide-react';
+import { motion, AnimatePresence, useSpring, useMotionValue } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { Bricolage_Grotesque } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { Ripple } from '../ui/ripple';
 import { SparklesText } from '../ui/sparkles-text';
-import { DrawCircleText } from '../ui/DrawCircleText';
+
 const brico = Bricolage_Grotesque({
   subsets: ['latin'],
 });
-
-// Sample users for the waitlist display
-const users = [
-  { imgUrl: 'https://avatars.githubusercontent.com/u/111780029' },
-  { imgUrl: 'https://avatars.githubusercontent.com/u/123104247' },
-  { imgUrl: 'https://avatars.githubusercontent.com/u/115650165' },
-  { imgUrl: 'https://avatars.githubusercontent.com/u/71373838' },
-];
 
 export default function WaitlistPage() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { resolvedTheme } = useTheme();
-  const [color, setColor] = useState('#ffffff');
+  const isDark = resolvedTheme === 'dark';
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 25, stiffness: 700 };
+  const spotlightX = useSpring(mouseX, springConfig);
+  const spotlightY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setColor(resolvedTheme === 'dark' ? '#ffffff' : '#e60a64');
-  }, [resolvedTheme]);
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setError(null);
-
-    // Your form submission logic here
-    // For now, let's just simulate a delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     setSubmitted(true);
     setIsSubmitting(false);
   };
 
   return (
-    <section className="relative flex flex-col min-h-screen w-full">
-      <Ripple></Ripple>
+    <main className={cn(
+      "relative min-h-screen w-full overflow-hidden flex flex-col items-center justify-center p-6 transition-colors duration-1000",
+      isDark ? "bg-[#0E0E0E]" : "bg-[#FAFAFA]"
+    )}>
+      
+      <motion.div 
+        initial={{ y: 0 }}
+        animate={{ y: "-100%" }}
+        transition={{ duration: 1.4, ease: [0.85, 0, 0.15, 1], delay: 0.5 }}
+        className="fixed inset-0 z-[200] bg-[#C89A3A] flex items-center justify-center"
+      >
+         <motion.div
+           initial={{ opacity: 1, letterSpacing: "0.2em" }}
+           animate={{ opacity: 0, letterSpacing: "1em" }}
+           transition={{ duration: 0.8, delay: 0.8 }}
+         >
+            <h2 className="text-[#0E0E0E] font-bold text-4xl">STYLEMATCH</h2>
+         </motion.div>
+      </motion.div>
 
-     
+      <div className="absolute inset-0 z-0 pointer-events-none">
 
-      <div className="relative z-[100] mx-auto max-w-5xl px-4 py-16 text-center scale-100 md:scale-[1.1] lg:scale-[1.2] mt-5">
+        <Ripple color={isDark ? "#C89A3A" : "#D4AF5A"} />
         
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="border-primary/10 from-primary/15 to-primary/5 mb-8 inline-flex items-center gap-2 rounded-full border bg-gradient-to-r px-4 py-2 backdrop-blur-sm"
-        >
-          <img
-            src="https://i.postimg.cc/j5dW4vFd/Mvpblocks.webp"
-            alt="logo"
-            className="spin h-6 w-6"
-          />
-          <span className="text-sm font-medium">Coming soon</span>
-          <motion.div
-            animate={{ x: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-          >
-            <ArrowRight className="h-4 w-4" />
-          </motion.div>
-        </motion.div>
+        <motion.div 
+          className="absolute w-[600px] h-[600px] rounded-full opacity-20 blur-[120px] pointer-events-none"
+          style={{
+            background: `radial-gradient(circle, ${isDark ? '#C89A3A' : '#D4AF5A'} 0%, transparent 70%)`,
+            left: spotlightX,
+            top: spotlightY,
+            x: "-50%",
+            y: "-50%"
+          }}
+        />
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className={cn(
-            'from-foreground via-foreground/80 to-foreground/40 mb-4 cursor-crosshair bg-gradient-to-b bg-clip-text text-4xl font-bold text-transparent sm:text-7xl',
-            brico.className,
-          )}
-        >
-          
-          <SparklesText className='text-primary' >StyleMatch</SparklesText>
-          
-        </motion.h1>
-
-        {/* Subtitle */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-muted-foreground mt-2 mb-12 sm:text-lg"
-        >
-
-          <div className='flex justify-center items-center'>
-          <DrawCircleText></DrawCircleText>
-          </div>
-         
-          
-          AI-powered discovery meets a curated marketplace of trusted Indian retailers
-          and designers.
-          <br className="hidden sm:block" />
-          StyleMatch connects global buyers to authentic Indian ethnic fashion.
-
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
-        >
-          <div
-            className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
-              resolvedTheme === 'dark' ? 'glass' : 'glass2',
-            )}
-          >
-            <span className="mb-1 text-lg">🧠</span>
-            <span className="text-xl font-bold">AI-Powered Styling</span>
-            <span className="text-muted-foreground text-xs">EFGPT-driven personalized recommendations</span>
-          </div>
-
-          <div
-            className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
-              resolvedTheme === 'dark' ? 'glass' : 'glass2',
-            )}
-          >
-            <span className="mb-1 text-lg">🇮🇳</span>
-            <span className="text-xl font-bold">Verified Indian Designers</span>
-            <span className="text-muted-foreground text-xs">Trusted sellers. Authentic fashion.</span>
-          </div>
-
-          <div
-            className={cn(
-              'border-primary/10 flex flex-col items-center justify-center rounded-xl border bg-white/5 p-4 backdrop-blur-md cursor-pointer transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(15,23,42,0.18)]',
-              resolvedTheme === 'dark' ? 'glass' : 'glass2',
-            )}
-          >
-            <span className="mb-1 text-lg">🌍</span>
-            <span className="text-xl font-bold">Global Fit & Delivery</span>
-            <span className="text-muted-foreground text-xs">Shop Indian ethnic wear worldwide with confidence</span>
-          </div>
-        </motion.div>
-
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          onSubmit={handleSubmit}
-          className="mx-auto flex flex-col gap-4 sm:flex-row"
-        >
-          <AnimatePresence mode="wait">
-            {!submitted ? (
-              <>
-                <div className="relative flex-1">
-                  <motion.input
-                    key="email-input"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setEmail(e.target.value)
-                    }
-                    required
-                    className="border-primary/20 text-foreground placeholder:text-muted-foreground/70 focus:border-primary/50 focus:ring-primary/30 w-full rounded-xl border bg-white/5 px-6 py-4 backdrop-blur-md transition-all focus:ring-2 focus:outline-none"
-                  />
-                  {error && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="border-destructive/40 bg-destructive/10 text-destructive mt-2 rounded-xl border px-4 py-1 text-sm sm:absolute"
-                    >
-                      {error}
-                    </motion.p>
-                  )}
-                </div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting || submitted}
-                  className="group text-primary-foreground focus:ring-primary/50 relative overflow-hidden rounded-xl bg-gradient-to-b from-rose-500 to-rose-700 px-8 py-4 font-semibold text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset] transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] focus:ring-2 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    {isSubmitting ? 'Joining...' : 'Join Waitlist'}
-                    <Sparkles className="h-4 w-4 transition-all duration-300 group-hover:rotate-12" />
-                  </span>
-                  <span className="to-primary absolute inset-0 z-0 bg-gradient-to-r from-rose-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
-                </button>
-              </>
-            ) : (
-              <motion.div
-                key="thank-you-message"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.6 }}
-                className={cn(
-                  'border-primary/20 from-primary/10 to-primary/10 text-primary flex-1 cursor-pointer rounded-xl border bg-gradient-to-r via-transparent px-6 py-4 font-medium backdrop-blur-md transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] active:brightness-125',
-                  resolvedTheme === 'dark' ? 'glass' : 'glass2',
-                )}
-              >
-                <span className="flex items-center justify-center gap-2">
-                  Thanks for joining!{' '}
-                  <Sparkles className="h-4 w-4 animate-pulse" />
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.form>
-
-        {/* Vendor button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
-          className="mt-4 flex justify-center"
-        >
-          <a
-            href="https://vendor.mystylematch.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-b from-rose-500 to-rose-700 px-8 py-4 text-sm font-semibold text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset] transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.4)] focus:outline-none focus:ring-2 focus:ring-primary/50 active:scale-95"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              I&apos;m a Vendor
-              <ExternalLink className="h-4 w-4 transition-all duration-300 group-hover:rotate-12" />
-            </span>
-            <span className="absolute inset-0 z-0 bg-gradient-to-r from-rose-500 to-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-          </a>
-        </motion.div>
-
-        <motion.div
+        <motion.div 
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-1"
+          animate={{ opacity: 0.03 }}
+          className="absolute top-1/2 left-0 w-full whitespace-nowrap -translate-y-1/2"
         >
-          <div className="flex -space-x-3">
-            {users.map((user, i) => (
-              <motion.div
-                key={i}
-                initial={{ scale: 0, x: -10 }}
-                animate={{ scale: 1, x: 0 }}
-                transition={{ duration: 0.4, delay: 1 + i * 0.2 }}
-                className="border-background from-primary size-10 rounded-full border-2 bg-gradient-to-r to-rose-500 p-[2px]"
-              >
-                <div className="overflow-hidden rounded-full">
-                  <img
-                    src={user.imgUrl}
-                    alt="Avatar"
-                    className="rounded-full transition-all duration-300 hover:scale-110 hover:rotate-6"
-                    width={40}
-                    height={40}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.span
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 1.3 }}
-            className="text-muted-foreground ml-2"
-          >
-            <span className="text-primary font-semibold">100+</span> already
-            joined ✨
-          </motion.span>
+          <h2 className={cn("text-[20vw] font-black uppercase tracking-tighter", brico.className)}>
+            Ethnic • Fashion 
+          </h2>
         </motion.div>
       </div>
 
+      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center text-center">
+        
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 1.8 }}
+          className={cn(
+            "mb-10 inline-flex items-center gap-3 px-5 py-2 rounded-full border backdrop-blur-xl shadow-2xl",
+            isDark ? "border-[#C89A3A]/30 bg-[#141414]/50 text-[#C89A3A]" : "border-[#0F172A]/10 bg-white/50 text-[#0F172A]"
+          )}
+        >
+          <Globe className="w-4 h-4 animate-spin-slow" />
+          <span className="text-[20px] font-bold uppercase tracking-[0.3em]"></span>
+          <div className="h-2 w-2 rounded-full bg-[#C89A3A]" />
+          <span className="text-[20px] font-bold uppercase tracking-widest text-[#C89A3A]">Coming Soon</span>
+        </motion.div>
+
+        <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 1.5, duration: 1 }}
+  className="mb-8"
+>
+  <SparklesText
+    sparklesCount={12}
+    colors={{ first: "#C89A3A", second: "#D4AF5A" }}
+    className={cn(
+      "text-7xl md:text-[10rem] font-bold tracking-tighter leading-[0.85]",
+      isDark ? "text-white" : "text-[#0F172A]",
+      brico.className
+    )}
+  >
+    Style<span className="text-[#C89A3A] italic font-serif serif">Match</span>
+  </SparklesText>
+</motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+          className={cn(
+            "max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed mb-16",
+            isDark ? "text-[#B3B3B3]" : "text-[#475569]"
+          )}
+        >
+          Establishing the world's leading <span className="text-[#C89A3A] font-medium">Global Ambassador</span> of Indian couture. Leveraging <span className="font-semibold italic">EFGPT technology</span> to bridge tradition with 2026 innovation.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 2.2 }}
+          className="w-full max-w-lg"
+        >
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.5 }}
+            className="mt-12 flex flex-col items-center gap-8"
+          >
+             <a 
+              href="https://vendor.mystylematch.com"
+              target="_blank"
+              className={cn(
+                "group relative flex items-center gap-3 px-8 py-5 rounded-2xl border border-[#C89A3A] overflow-hidden transition-all mb-2",
+                isDark ? "text-white/60 hover:text-white hover:border-[#C89A3A]" : "text-[#0F172A]/60 hover:text-[#0F172A] hover:border-[#C89A3A]"
+              )}
+            >
+              <Diamond className="w-4 h-4 text-[#C89A3A] transition-transform group-hover:rotate-45" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em]">I'm a vendor</span>
+              <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all translate-y-1 group-hover:translate-y-0" />
+            </a>
+          </motion.div>
+          <AnimatePresence mode="wait">
+            {!submitted ? (
+              <form 
+                onSubmit={handleSubmit} 
+                className="group relative"
+              >
+                <div className={cn(
+                  "flex flex-col sm:flex-row gap-3 p-3 rounded-[2rem] border transition-all duration-700",
+                  isDark 
+                    ? "bg-[#141414]/80 border-white/10 focus-within:border-[#C89A3A]/50 focus-within:shadow-[0_0_50px_rgba(200,154,58,0.15)] backdrop-blur-3xl" 
+                    : "bg-white/80 border-[#0F172A]/10 focus-within:border-[#C89A3A] shadow-2xl backdrop-blur-3xl"
+                )}>
+                  <div className="flex-1 flex items-center px-4">
+                    <Sparkles className="w-4 h-4 text-[#C89A3A] mr-3 opacity-50 group-focus-within:opacity-100 transition-opacity" />
+                    <input 
+                      type="email" 
+                      required 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="ENTER EMAIL"
+                      className={cn(
+                        "w-full bg-transparent outline-none text-xs font-bold tracking-widest uppercase",
+                        isDark ? "text-white placeholder:text-white/20" : "text-[#0F172A] placeholder:text-black/20"
+                      )}
+                    />
+                  </div>
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="relative overflow-hidden bg-[#C89A3A] hover:bg-[#D4AF5A] text-[#0E0E0E] px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all active:scale-95 flex items-center justify-center gap-2 group/btn shadow-lg"
+                  >
+                    <span className="relative z-10">{isSubmitting ? "Syncing..." : "Join the Waitlist"}</span>
+                    <ArrowRight className="w-4 h-4 relative z-10 transition-transform group-hover/btn:translate-x-1" />
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center gap-4 py-6"
+              >
+                <div className="w-16 h-16 rounded-full border border-[#C89A3A] flex items-center justify-center text-[#C89A3A] animate-bounce">
+                  <ShieldCheck className="w-8 h-8" />
+                </div>
+                <h3 className={cn("text-xl font-bold uppercase tracking-widest", isDark ? "text-white" : "text-[#0F172A]")}>
+                  Invitation <span className="text-[#C89A3A]">Reserved</span>
+                </h3>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          
+        </motion.div>
+
+      </div>
+
+      
       <style jsx global>{`
-        @keyframes float {
-          0%,
-          100% {
-            transform: translateY(0) translateX(0);
-            opacity: 0.3;
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-            opacity: 0.8;
-          }
-          50% {
-            transform: translateY(-40px) translateX(-10px);
-            opacity: 0.4;
-          }
-          75% {
-            transform: translateY(-20px) translateX(10px);
-            opacity: 0.6;
-          }
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 12s linear infinite;
         }
       `}</style>
-      
-    </section>
+
+    </main>
   );
 }
